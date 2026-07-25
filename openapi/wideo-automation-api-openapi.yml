@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Wideo Video Automation API
+  version: '1.0'
+  description: Wideo's Video Automation API generates finished MP4 videos at scale from reusable templates and structured data. A rendering batch is created from a template plus a list of per-video variable objects; rendering is asynchronous and completion is signalled by a webhook callback and/or by polling batch status for signed video and preview URLs. A legacy replace/encode flow lets a template's variables be replaced and then encoded into a single video.
+  contact:
+    name: Wideo API Support
+    url: https://wideo.co/api-documentation/
+  x-logo:
+    url: https://wideo.co
+servers:
+- url: https://automationapi.wideo.co
+  description: Wideo Automation API production host
+security:
+- apiKeyAuth: []
+tags:
+- name: Automation
+  description: Legacy variable replace and single-video encode flow
+paths:
+  /automation/replace:
+    post:
+      tags:
+      - Automation
+      operationId: replaceVariables
+      summary: Replace template variables
+      description: Legacy flow. Replace a template's variable content with supplied values, producing a replace object that can then be encoded into a video.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceRequest'
+      responses:
+        '200':
+          description: Replace object created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplaceResponse'
+  /automation/encode:
+    post:
+      tags:
+      - Automation
+      operationId: encodeVideo
+      summary: Encode a video
+      description: Legacy flow. Encode a single MP4 video from a template and a previously created replace object, returning the finished video URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncodeRequest'
+      responses:
+        '200':
+          description: Video encoded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncodeResponse'
+components:
+  schemas:
+    ReplaceRequest:
+      type: object
+      required:
+      - templateId
+      properties:
+        templateId:
+          type: string
+        variables:
+          type: object
+          additionalProperties: true
+    EncodeRequest:
+      type: object
+      required:
+      - templateId
+      - replaceId
+      properties:
+        templateId:
+          type: string
+        replaceId:
+          type: string
+    EncodeResponse:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          format: uri
+    ReplaceResponse:
+      type: object
+      properties:
+        replaceId:
+          type: string
+          description: REPLACE_OBJECT_ID referenced by the encode call
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key in UUID form, scoped to a specific account and permission set. Generated assets are isolated by account.

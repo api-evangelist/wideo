@@ -1,0 +1,145 @@
+openapi: 3.0.3
+info:
+  title: Wideo Video Automation Batch API
+  version: '1.0'
+  description: Wideo's Video Automation API generates finished MP4 videos at scale from reusable templates and structured data. A rendering batch is created from a template plus a list of per-video variable objects; rendering is asynchronous and completion is signalled by a webhook callback and/or by polling batch status for signed video and preview URLs. A legacy replace/encode flow lets a template's variables be replaced and then encoded into a single video.
+  contact:
+    name: Wideo API Support
+    url: https://wideo.co/api-documentation/
+  x-logo:
+    url: https://wideo.co
+servers:
+- url: https://automationapi.wideo.co
+  description: Wideo Automation API production host
+security:
+- apiKeyAuth: []
+tags:
+- name: Batch
+  description: Batch video rendering from a template and a set of variable objects
+paths:
+  /batch:
+    post:
+      tags:
+      - Batch
+      operationId: createBatch
+      summary: Create a rendering batch
+      description: Create a rendering batch from a template and per-video metadata. Returns a batchId immediately; rendering runs asynchronously. When rendering finishes, Wideo delivers a webhook callback to the supplied webhook URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBatchRequest'
+            example:
+              templateId: template_123
+              webhook: https://your-domain.com/webhook
+              videos:
+              - title: Product Launch Video
+                companyname: Acme Inc.
+                logo: https://example.com/logo.png
+      responses:
+        '200':
+          description: Batch accepted for rendering
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBatchResponse'
+              example:
+                batchId: 1234567890
+        '401':
+          description: Missing or invalid API key
+  /batch/{batchId}:
+    get:
+      tags:
+      - Batch
+      operationId: getBatch
+      summary: Check batch status
+      description: Retrieve the status of a rendering batch and, once SUCCEEDED, the signed video and preview URLs for each generated video.
+      parameters:
+      - name: batchId
+        in: path
+        required: true
+        description: Identifier returned by createBatch
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Batch status and generated assets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchStatus'
+              example:
+                batchId: 1234567890
+                status: SUCCEEDED
+                videos:
+                - videoUrl: https://signed-url.example.com/video.mp4
+                  previewUrl: https://signed-url.example.com/preview.png
+        '401':
+          description: Missing or invalid API key
+        '404':
+          description: Batch not found
+components:
+  schemas:
+    VideoVariables:
+      type: object
+      description: Free-form map of template variable names to values. Keys correspond to the variable content areas defined in the template.
+      additionalProperties: true
+    RenderedVideo:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          format: uri
+          description: Signed URL of the rendered MP4
+        previewUrl:
+          type: string
+          format: uri
+          description: Signed URL of the preview image
+    BatchStatus:
+      type: object
+      properties:
+        batchId:
+          type: integer
+          format: int64
+        status:
+          type: string
+          description: Rendering status of the batch
+          enum:
+          - SUCCEEDED
+        videos:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderedVideo'
+    CreateBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: integer
+          format: int64
+          description: Identifier used to poll batch status
+    CreateBatchRequest:
+      type: object
+      required:
+      - templateId
+      - videos
+      properties:
+        templateId:
+          type: string
+          description: Identifier of the Wideo template to render
+        webhook:
+          type: string
+          format: uri
+          description: URL to receive the async completion callback
+        videos:
+          type: array
+          description: One variable object per video to render from the template
+          items:
+            $ref: '#/components/schemas/VideoVariables'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key in UUID form, scoped to a specific account and permission set. Generated assets are isolated by account.
