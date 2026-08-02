@@ -1,7 +1,29 @@
 aid: wideo
 name: Wideo
-description: Wideo is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Wideo is an online video creation and automation platform that lets teams
+  produce animated videos, presentations, and marketing content from
+  drag-and-drop templates and AI tools. For developers, Wideo publishes a Video
+  Automation API that renders finished MP4 videos at scale: a rendering batch is
+  created from a reusable template plus a list of per-video variable objects,
+  rendering runs asynchronously, and completion is delivered via a webhook
+  callback and pollable batch status returning signed video and preview URLs. A
+  legacy replace/encode flow supports single-video generation. Wideo also offers
+  a white-label video API for embedding video creation into other products.
+  Wideo was surfaced as a portfolio company of 500 Global.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://wideo.co
 url: https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,15 +33,97 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Video
+- Video Automation
+- Content Creation
+- Media
+- Marketing
+- Templates
+- No-Code
+apis:
+- aid: wideo:wideo-automation-api
+  name: Wideo Automation API
+  description: Legacy variable replace and single-video encode flow
+  humanURL: https://wideo.co/api-documentation/
+  baseURL: https://automationapi.wideo.co
+  tags:
+  - Automation
+  properties:
+  - type: OpenAPI
+    url: openapi/wideo-automation-api-openapi.yml
+  - type: Documentation
+    url: https://wideo.co/api-documentation/
+  - type: APIReference
+    url: https://wideo.co/api-documentation/
+- aid: wideo:wideo-batch-api
+  name: Wideo Batch API
+  description: Batch video rendering from a template and a set of variable objects
+  humanURL: https://wideo.co/api-documentation/
+  baseURL: https://automationapi.wideo.co
+  tags:
+  - Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/wideo-batch-api-openapi.yml
+  - type: Documentation
+    url: https://wideo.co/api-documentation/
+  - type: APIReference
+    url: https://wideo.co/api-documentation/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/wideo-agentic-access.yml
+- type: Conventions
+  url: conventions/wideo-conventions.yml
+- type: Webhooks
+  url: asyncapi/wideo-events-asyncapi.yml
+- type: MCPServer
+  url: mcp/wideo-mcp.yml
+- type: LLMsTxt
+  url: llms/wideo-llms.txt
+- type: Overlay
+  url: overlays/wideo-automation-overlay.yaml
+- type: WellKnown
+  url: well-known/wideo-well-known.yml
+- type: DataModel
+  url: data-model/wideo-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/wideo-domain-security.yml
+- type: Authentication
+  url: authentication/wideo-authentication.yml
 - type: Website
   url: https://wideo.co
+- type: DeveloperPortal
+  url: https://wideo.co/developers/
+- type: Documentation
+  url: https://wideo.co/api-documentation/
+- type: APIReference
+  url: https://wideo.co/api-documentation/
+- type: Pricing
+  url: https://wideo.co/pricing-guide/
+- type: Blog
+  url: https://wideo.co/blog/
+- type: Support
+  url: https://help.wideo.co/hc/en-us
+- type: HelpCenter
+  url: https://help.wideo.co/hc/en-us
+- type: SignUp
+  url: https://app.wideo.co/en/createAccount/
+- type: TermsOfService
+  url: https://wideo.co/terms-and-conditions-wideo/
+- type: PrivacyPolicy
+  url: https://wideo.co/wideo-privacy-policy/
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

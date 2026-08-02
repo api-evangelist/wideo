@@ -1,0 +1,21 @@
+{
+  "repo": "wideo",
+  "feeds": [
+    {
+      "source": "https://wideo.co/feed/",
+      "feed_url": "https://wideo.co/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://wideo.co/pricing-guide/",
+      "feed_url": "https://wideo.co/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-08-01T15:49:00Z"
+}

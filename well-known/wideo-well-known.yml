@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: live probe of /.well-known/ on wideo.co and automationapi.wideo.co
+hosts:
+- host: https://wideo.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://automationapi.wideo.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /llms.txt
+    status: 403
+notes: >-
+  No .well-known discovery documents are published. The wideo.co web host
+  returns 404 for all probed paths; the automationapi.wideo.co API host returns
+  403 (access-gated) for all paths including its root, consistent with an
+  API-key-protected surface. Recorded absence is valid data.

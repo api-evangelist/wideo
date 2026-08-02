@@ -1,0 +1,16 @@
+{
+  "provider": "wideo",
+  "sources": [
+    "wideo-automation-api-openapi.yml",
+    "wideo-batch-api-openapi.yml"
+  ],
+  "outputs": [
+    "wideo-automation-api-openapi.yml",
+    "wideo-batch-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

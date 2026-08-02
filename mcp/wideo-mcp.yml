@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/wideo-automation-openapi.yml
+server:
+  name: wideo
+  transport: http
+  url: null
+description: >-
+  No official Wideo MCP server was found. This is a candidate tool surface
+  derived from the documented Video Automation API operations, one tool per
+  operationId. Not an authoritative provider claim.
+tools:
+- name: create_batch
+  description: Create a rendering batch from a template and a list of per-video variable objects.
+  source_operation: openapi/wideo-automation-openapi.yml#createBatch
+- name: get_batch
+  description: Check batch status and retrieve signed video and preview URLs when SUCCEEDED.
+  source_operation: openapi/wideo-automation-openapi.yml#getBatch
+- name: replace_variables
+  description: Legacy flow — replace a template's variables to produce a replace object.
+  source_operation: openapi/wideo-automation-openapi.yml#replaceVariables
+- name: encode_video
+  description: Legacy flow — encode a single MP4 video from a template and a replace object.
+  source_operation: openapi/wideo-automation-openapi.yml#encodeVideo

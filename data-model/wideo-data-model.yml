@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/wideo-automation-openapi.yml
+summary: >-
+  Entity-relationship graph derived from the Wideo Video Automation API OpenAPI
+  schemas. A Template is rendered against a set of per-video variable objects to
+  produce a Batch, which yields one RenderedVideo per input.
+entities:
+- name: Template
+  description: A reusable Wideo video template with variable content areas.
+  identifier: templateId
+  external: true
+  notes: Templates are authored in Wideo; the API references them by id.
+- name: Batch
+  description: An asynchronous rendering job created from a template and a list of variable objects.
+  identifier: batchId
+  fields:
+  - templateId
+  - webhook
+  - status
+  - videos
+- name: VideoVariables
+  description: Free-form map of template variable names to values, one per output video.
+- name: RenderedVideo
+  description: A finished MP4 with a signed video URL and preview image URL.
+  fields:
+  - videoUrl
+  - previewUrl
+- name: ReplaceObject
+  description: Legacy replace result (REPLACE_OBJECT_ID) consumed by the encode operation.
+  identifier: replaceId
+relationships:
+- from: Batch
+  to: Template
+  type: belongs_to
+  via: templateId
+- from: Batch
+  to: RenderedVideo
+  type: has_many
+  via: videos
+- from: Batch
+  to: VideoVariables
+  type: has_many
+  via: videos
+- from: EncodeRequest
+  to: ReplaceObject
+  type: belongs_to
+  via: replaceId
+- from: EncodeRequest
+  to: Template
+  type: belongs_to
+  via: templateId

@@ -1,0 +1,28 @@
+# Wideo
+
+> Wideo is an online video creation and automation platform. Its Video Automation API renders finished MP4 videos at scale from reusable templates and structured per-video data, with asynchronous batch rendering, webhook completion callbacks, and signed video/preview URLs.
+
+## APIs
+
+- [Wideo Video Automation API — Documentation](https://wideo.co/api-documentation/): Create rendering batches from a template and per-video variables; poll batch status for signed asset URLs. Auth: x-api-key header.
+- [Video API product overview](https://wideo.co/api/): Automated video creation at scale from any data source.
+
+## Specs
+
+- [OpenAPI (Video Automation API)](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/openapi/wideo-automation-openapi.yml)
+- [Webhook catalog](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/asyncapi/wideo-events-asyncapi.yml)
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/authentication/wideo-authentication.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/conventions/wideo-conventions.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/data-model/wideo-data-model.yml)
+
+## Docs
+
+- [Developers](https://wideo.co/developers/)
+- [API documentation](https://wideo.co/api-documentation/)
+- [Help center](https://help.wideo.co/hc/en-us)
+- [Pricing](https://wideo.co/pricing-guide/)
+- [White-label video API](https://wideo.co/white-label-video/)
+- [Blog](https://wideo.co/blog/)
+- [Sign up](https://app.wideo.co/en/createAccount/)
+- [Terms and conditions](https://wideo.co/terms-and-conditions-wideo/)
+- [Privacy policy](https://wideo.co/wideo-privacy-policy/)

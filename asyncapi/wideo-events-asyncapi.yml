@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: derived
+source: https://wideo.co/api-documentation/, openapi/wideo-automation-openapi.yml
+spec_type: Webhooks
+summary: >-
+  Wideo delivers an asynchronous completion callback for each rendering batch.
+  The caller supplies a `webhook` URL when creating a batch (POST /batch); when
+  rendering finishes, Wideo POSTs a completion notification to that URL. No
+  published AsyncAPI document exists; this is a derived webhook catalog.
+delivery:
+  transport: http
+  method: POST
+  target: caller-supplied `webhook` URL on the batch
+  content_type: application/json
+webhooks:
+- name: batch.completed
+  description: >-
+    Emitted when a rendering batch finishes. Signals that generated video and
+    preview URLs are available; the receiver can then GET /batch/{batchId} for
+    the signed asset URLs (or read them from the payload if included).
+  trigger: rendering of a batch created via POST /batch completes
+  related_operations:
+  - openapi/wideo-automation-openapi.yml#createBatch
+  - openapi/wideo-automation-openapi.yml#getBatch
+  payload_fields:
+  - batchId
+  - status
+  - videos[].videoUrl
+  - videos[].previewUrl
+notes: >-
+  Only the SUCCEEDED terminal status is documented. Fabricating additional
+  event types or a full channel/message schema would not be faithful to the
+  published surface.

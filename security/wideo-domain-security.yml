@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: wideo.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  1 03:56:48 2026 GMT
+  hsts: false
+- host: automationapi.wideo.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 25 23:59:59 2026 GMT
+  hsts: null
+domains:
+- domain: wideo.co
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

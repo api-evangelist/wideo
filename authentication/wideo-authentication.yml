@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/wideo-automation-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: API key in UUID form, scoped to a specific account and permission set. Generated
+    assets are isolated by account.
+  sources:
+  - openapi/wideo-automation-openapi.yml

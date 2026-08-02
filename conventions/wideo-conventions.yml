@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: derived
+source: https://wideo.co/api-documentation/, openapi/wideo-automation-openapi.yml
+summary: >-
+  Cross-cutting request/response semantics for the Wideo Video Automation API,
+  derived from the published documentation and OpenAPI. Rendering is an
+  asynchronous batch model: submit a batch, receive an id immediately, and learn
+  of completion via a webhook callback or by polling batch status.
+authentication:
+  style: api-key
+  scheme: header
+  header: x-api-key
+  format: UUID
+  scope: per-account, permission-scoped; generated assets isolated by account
+  docs: https://wideo.co/api-documentation/
+async_model:
+  pattern: batch-render-then-callback
+  submit: POST /batch returns a batchId immediately
+  completion_webhook: >-
+    Caller supplies a `webhook` URL on the batch; Wideo POSTs an async
+    completion notification to it when rendering finishes.
+  poll: GET /batch/{batchId} returns status and, when SUCCEEDED, signed asset URLs
+  statuses_documented:
+  - SUCCEEDED
+idempotency:
+  supported: false
+  notes: >-
+    No idempotency-key header or parameter is documented for batch creation.
+pagination:
+  supported: false
+  notes: Batch status returns the full videos array; no paged collection endpoints documented.
+media_type: application/json
+asset_delivery:
+  style: signed-url
+  fields:
+  - videoUrl
+  - previewUrl
+  notes: Rendered MP4 and preview image are returned as signed URLs on the batch status.
+versioning:
+  scheme: unversioned-host
+  notes: Endpoints served from automationapi.wideo.co with no version path segment documented.
+error_signaling:
+  notes: >-
+    Documentation surfaces a SUCCEEDED status but does not publish a structured
+    error catalog or error envelope. Authentication failures and missing
+    batches are represented with standard HTTP status codes.
+cross_links:
+  authentication: authentication/wideo-authentication.yml
+  webhooks: asyncapi/wideo-events-asyncapi.yml
+  openapi: openapi/wideo-automation-openapi.yml

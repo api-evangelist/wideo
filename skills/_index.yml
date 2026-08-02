@@ -1,0 +1,10 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/wideo-automation-openapi.yml
+skills:
+- file: wideo-batch-video-generation.md
+  name: Generate videos in bulk with Wideo
+  api: openapi/wideo-automation-openapi.yml
+  operations:
+  - createBatch
+  - getBatch

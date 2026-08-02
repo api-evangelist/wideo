@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Wideo Video Automation API
+  version: 1.0.0
+extends: openapi/wideo-automation-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-category: video-automation
+    x-apievangelist-async-model: batch-render-then-webhook
+- target: $.paths['/batch'].post
+  update:
+    x-async: true
+    x-completion: webhook + poll GET /batch/{batchId}
+- target: $.paths['/batch/{batchId}'].get
+  update:
+    x-poll-for: SUCCEEDED
