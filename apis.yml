@@ -23,7 +23,7 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
-image: https://wideo.co
+image: https://wideo.co/wp-content/uploads/2017/12/logo.png
 url: https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -33,7 +33,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - Video
@@ -90,8 +90,24 @@ common:
   url: llms/wideo-llms.txt
 - type: Overlay
   url: overlays/wideo-automation-overlay.yaml
-- type: WellKnown
-  url: well-known/wideo-well-known.yml
+- type: Overlay
+  url: overlays/wideo-batch-overlay.yaml
+- type: ToolCrosswalk
+  url: mcp/wideo-tool-crosswalk.yml
+- type: Packages
+  url: packages/wideo-packages.yml
+- type: ErrorCatalog
+  url: errors/wideo-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/wideo-lifecycle.yml
+- type: StatusPage
+  url: https://status.wideo.co/
+- type: Conformance
+  url: conformance/wideo-conformance.yml
+- type: Plans
+  url: plans/wideo-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/wideo-rate-limits.yml
 - type: DataModel
   url: data-model/wideo-data-model.yml
 - type: AgentSkill
@@ -103,7 +119,9 @@ common:
 - type: Website
   url: https://wideo.co
 - type: DeveloperPortal
-  url: https://wideo.co/developers/
+  url: https://wideo.co/api/
+- type: GettingStarted
+  url: https://wideo.co/api/
 - type: Documentation
   url: https://wideo.co/api-documentation/
 - type: APIReference
@@ -123,7 +141,7 @@ common:
 - type: PrivacyPolicy
   url: https://wideo.co/wideo-privacy-policy/
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 13
+  artifacts_added: 9
   pass: local-v1
