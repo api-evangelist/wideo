@@ -1,10 +1,16 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: generated
-source: openapi/wideo-automation-openapi.yml
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml, https://wideo.co/api-documentation/
 skills:
 - file: wideo-batch-video-generation.md
   name: Generate videos in bulk with Wideo
-  api: openapi/wideo-automation-openapi.yml
+  api: openapi/wideo-batch-api-openapi.yml
   operations:
   - createBatch
   - getBatch
+- file: wideo-legacy-replace-and-encode.md
+  name: Render a single video with the legacy Wideo replace/encode flow
+  api: openapi/wideo-automation-api-openapi.yml
+  operations:
+  - replaceVariables
+  - encodeVideo

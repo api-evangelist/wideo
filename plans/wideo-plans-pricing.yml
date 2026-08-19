@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: searched
+source: https://wideo.co/api-documentation/
+docs:
+- https://wideo.co/api-documentation/
+- https://wideo.co/pricing-guide/
+summary: >-
+  Wideo publishes two distinct, separately priced surfaces. The Video Automation
+  API is sold on its own monthly credit plans, published on the API documentation
+  page, where 1 credit equals 60 seconds of generated video. The end-user Wideo
+  editor is sold on a separate seat/download subscription published on the pricing
+  guide. The API plans are the ones that govern programmatic access; API access is
+  not self-serve — every API tier is entered through a "Request API access" form.
+plan_count: 8
+currency: USD
+unit:
+  name: credit
+  definition: 1 credit = 60 seconds of generated video
+  source: https://wideo.co/api-documentation/
+plans:
+- name: Basic
+  surface: api
+  price: 299
+  currency: USD
+  period: month
+  included:
+    credits: 500
+    video_seconds: 30000
+  overage: not published
+  source: https://wideo.co/api-documentation/
+- name: Pro
+  surface: api
+  price: 560
+  currency: USD
+  period: month
+  recommended: true
+  included:
+    credits: 1000
+    video_seconds: 60000
+  overage: not published
+  source: https://wideo.co/api-documentation/
+- name: Pro+
+  surface: api
+  price: 1064
+  currency: USD
+  period: month
+  included:
+    credits: 2000
+    video_seconds: 120000
+  overage: not published
+  source: https://wideo.co/api-documentation/
+- name: Enterprise
+  surface: api
+  price: null
+  currency: USD
+  period: month
+  included:
+    credits: custom
+  contact_sales: true
+  source: https://wideo.co/api-documentation/
+- name: Free
+  surface: product
+  price: 0
+  currency: USD
+  period: month
+  limits:
+    downloads: 0
+    video_length_minutes: 1
+    templates: 10
+    storage: 50 MB
+    branding: Wideo-branded videos only
+  source: https://wideo.co/pricing-guide/
+- name: Basic
+  surface: product
+  price: 59
+  price_annual_monthly: 19
+  price_annual_total: 228
+  currency: USD
+  period: month
+  limits:
+    downloads: 10 per month (HD)
+    video_length_minutes: 1.5
+    templates: 33
+    storage: 2 GB
+  source: https://wideo.co/pricing-guide/
+- name: Pro
+  surface: product
+  price: 99
+  price_annual_monthly: 39
+  price_annual_total: 468
+  currency: USD
+  period: month
+  limits:
+    downloads: unlimited (Full HD)
+    video_length_minutes: 10
+    templates: full gallery
+    storage: unlimited
+  source: https://wideo.co/pricing-guide/
+- name: Pro+
+  surface: product
+  price: 199
+  price_annual_monthly: 79
+  price_annual_total: 948
+  currency: USD
+  period: month
+  limits:
+    downloads: unlimited (Full HD)
+    video_length_minutes: 30
+    templates: full gallery
+    seats: 3 additional
+    zapier_automation: 50 videos per month
+  source: https://wideo.co/pricing-guide/
+notes: >-
+  Overage pricing, credit rollover and per-request rate limits are not published on
+  either page. The only programmatic quota Wideo publishes is the monthly credit
+  allowance on the API tiers and the 50-videos-per-month Zapier automation cap on
+  the product Pro+ tier. Additional product seats are advertised from $59 per user
+  per year. All amounts are USD.

@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org, pypi.org, rubygems.org, packagist.org, https://wideo.co/api-documentation/
+summary: >-
+  Wideo ships no client library for the Video Automation API in any language. The
+  only integration code it publishes is an inline fetch() snippet on
+  https://wideo.co/api/. A first-party npm scope @wideo does exist — its packages
+  are maintained by staff@wideo.co — but every package under it is internal
+  tooling unrelated to the API, and none has been republished since 2023. No
+  SDKs pointer is emitted, because Wideo publishes no SDK.
+sdk_count: 0
+packages:
+- language: javascript
+  registry: npm
+  name: '@wideo/react-image-editor'
+  url: https://www.npmjs.com/package/@wideo/react-image-editor
+  install: npm install @wideo/react-image-editor
+  version: 3.15.5
+  published: '2023-08-17'
+  official: true
+  api_client: false
+  note: >-
+    First-party by maintainer (staff@wideo.co) but not a Wideo API client — it is a
+    republished fork of NHN Cloud's TOAST UI Image Editor for React, pointing at
+    github.com/stagr/tui.image-editor. Last release 2023-08-17.
+- language: javascript
+  registry: npm
+  name: '@wideo/sheet-services'
+  url: https://www.npmjs.com/package/@wideo/sheet-services
+  install: npm install @wideo/sheet-services
+  version: 1.0.13
+  published: '2023-03-09'
+  official: true
+  api_client: false
+  note: >-
+    First-party (author juani@wideo.co, maintainer staff@wideo.co) internal utility
+    for reading and writing Google Sheets. No repository or homepage declared. Not
+    related to the Video Automation API. Last release 2023-03-09.
+- language: javascript
+  registry: npm
+  name: '@wideo/wideo-test'
+  url: https://www.npmjs.com/package/@wideo/wideo-test
+  install: npm install @wideo/wideo-test
+  version: 1.0.0
+  published: '2022-11-08'
+  official: true
+  api_client: false
+  note: Empty placeholder package on the first-party @wideo scope. Never updated past 1.0.0.
+registries_checked:
+- registry: npm
+  result: '@wideo scope found; no API client library'
+- registry: pypi
+  result: >-
+    The name "wideo" on PyPI (version 0.7.3, WTFPL) is an unrelated third-party
+    Wagtail video plugin, not Wideo the company. Not recorded as a Wideo package.
+- registry: rubygems
+  result: 404 — no gem
+- registry: packagist
+  result: no Wideo package
+- registry: maven-central
+  result: no Wideo artifact
+- registry: nuget
+  result: no Wideo package
+- registry: pkg.go.dev
+  result: no Wideo module
+- registry: crates.io
+  result: no Wideo crate
+note: >-
+  Currency signal: the newest first-party Wideo package on any public registry was
+  published 2023-08-17, roughly three years before this check, and none of the
+  three wraps the API that Wideo actively sells. An integrator building against the
+  Video Automation API in 2026 writes their own HTTP client.

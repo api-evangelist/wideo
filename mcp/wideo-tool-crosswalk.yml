@@ -1,0 +1,74 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/wideo-mcp.yml, openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml
+summary: >-
+  Wideo ships no MCP server and no GraphQL surface, so this crosswalk binds the
+  candidate tool set derived in mcp/wideo-mcp.yml back to the REST operations it
+  was derived from. Every tool maps one-to-one onto a real operationId, and there
+  are no MCP-only or REST-only divergences — which is the expected shape when the
+  tool list is derived from the contract rather than published by the provider.
+  Confidence is high on the binding and irrelevant to the question of whether an
+  agent can reach Wideo today: it cannot, because no server exists.
+surfaces:
+  openapi:
+  - file: openapi/wideo-batch-api-openapi.yml
+    operations: 2
+    gated: false
+    note: API Evangelist derivation from the published docs; Wideo publishes no OpenAPI.
+  - file: openapi/wideo-automation-api-openapi.yml
+    operations: 2
+    gated: false
+    note: API Evangelist derivation from the published docs; Wideo publishes no OpenAPI.
+  graphql: null
+  mcp:
+    url: null
+    status: candidate
+    gated: false
+    note: No hosted or stdio MCP server is published by Wideo; tools/list could not be called because there is nothing to call.
+crosswalk:
+- tool: create_batch
+  category: rendering
+  rest:
+  - createBatch
+  binding: rest
+  confidence: high
+  note: Inherits templateId, webhook and videos[] from CreateBatchRequest in openapi/wideo-batch-api-openapi.yml.
+- tool: get_batch
+  category: rendering
+  rest:
+  - getBatch
+  binding: rest
+  confidence: high
+  note: Inherits the batchId path parameter; returns BatchStatus with signed videoUrl/previewUrl.
+- tool: replace_variables
+  category: legacy-automation
+  rest:
+  - replaceVariables
+  binding: rest
+  confidence: high
+  note: Inherits the ReplaceRequest data map; returns the REPLACE_OBJECT_ID.
+- tool: encode_video
+  category: legacy-automation
+  rest:
+  - encodeVideo
+  binding: rest
+  confidence: high
+  note: Inherits clientId and videos[] {templateId, replaceId} from EncodeRequest.
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 4
+  tools_bound: 4
+  mcp_only: 0
+  rest_operations_total: 4
+  rest_operations_with_tool: 4
+gaps:
+- >-
+  The async model does not survive a naive tool mapping. create_batch returns a
+  batchId, not a video, so an agent driving these tools must either poll get_batch
+  or terminate a webhook it cannot receive. Any real Wideo MCP server would need a
+  wait/poll composite tool that has no REST counterpart.
+- >-
+  No documented failure status for a batch means an agent polling get_batch has no
+  published terminal condition other than SUCCEEDED, and therefore no defined exit
+  from the poll loop.

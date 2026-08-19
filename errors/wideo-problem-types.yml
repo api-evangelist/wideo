@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml, live probe of https://automationapi.wideo.co
+format: vendor-json
+rfc9457: false
+summary: >-
+  Wideo publishes no error reference for the Video Automation API. This catalog is
+  derived from the status codes carried in the captured OpenAPI plus one error
+  envelope observed directly on the live host. The API is fronted by AWS API
+  Gateway behind CloudFront, so unauthenticated and unmatched-route failures are
+  answered by the gateway's own envelope — a single `message` string — rather than
+  by an application error type. There is no `application/problem+json`, no error
+  code registry, and no correlation id documented for callers.
+envelope:
+  media_type: application/json
+  shape:
+    message: string
+  observed_example:
+    message: Missing Authentication Token
+  note: >-
+    Observed verbatim on 2026-08-13. AWS surfaces the failure class in the
+    `x-amzn-errortype` response header (MissingAuthenticationTokenException) and a
+    request correlation id in `x-amzn-requestid` / `x-amz-apigw-id`; neither is
+    documented by Wideo.
+problems:
+- status: 403
+  title: Missing Authentication Token
+  detail: >-
+    Returned by the AWS API Gateway edge when the x-api-key header is absent or the
+    route does not exist. Indistinguishable from a 404 on this surface — an unknown
+    path and a missing key both answer 403 with the same body.
+  method: probed
+  source: https://automationapi.wideo.co/batch
+  headers:
+    x-amzn-errortype: MissingAuthenticationTokenException
+  remediation: Send a valid account API key in the x-api-key header and confirm the path.
+- status: 401
+  title: Missing or invalid API key
+  detail: Declared on the batch operations in the captured OpenAPI.
+  method: derived
+  source_operation:
+  - openapi/wideo-batch-api-openapi.yml#createBatch
+  - openapi/wideo-batch-api-openapi.yml#getBatch
+  remediation: Send a valid account API key in the x-api-key header.
+- status: 404
+  title: Batch not found
+  detail: The requested batchId does not exist or is not visible to the calling account.
+  method: derived
+  source_operation:
+  - openapi/wideo-batch-api-openapi.yml#getBatch
+  remediation: Verify the batchId returned by createBatch; assets are isolated per account.
+gaps:
+- No published error reference or error-code registry.
+- No error type URIs; RFC 9457 problem+json is not used.
+- No documented rendering-failure status. Only the SUCCEEDED terminal status of a
+  batch is published, so a caller polling getBatch has no documented way to
+  recognise a failed or partially failed render.
+- The gateway 403 conflates authentication failure with an unknown route.

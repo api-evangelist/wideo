@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Wideo Video Automation Batch API
+  version: 1.0.0
+extends: openapi/wideo-batch-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-category: video-automation
+    x-apievangelist-async-model: batch-render-then-webhook
+    x-apievangelist-maturity: developer-preview
+    x-apievangelist-source: https://wideo.co/api-documentation/
+- target: $.paths['/batch'].post
+  update:
+    x-async: true
+    x-completion: webhook + poll GET /batch/{batchId}
+    x-idempotent: false
+    x-quota-unit: credit
+    x-note: >-
+      Billed in credits, where one credit is 60 seconds of generated video, against
+      a monthly allowance. No idempotency key is documented, so a resubmitted batch
+      renders and bills again.
+- target: $.paths['/batch/{batchId}'].get
+  update:
+    x-poll-for: SUCCEEDED
+    x-note: >-
+      SUCCEEDED is the only terminal status Wideo publishes. No failure status is
+      documented, so a poll loop has no published exit condition on error.

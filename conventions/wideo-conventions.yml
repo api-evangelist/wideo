@@ -1,11 +1,14 @@
-generated: '2026-07-21'
-method: derived
-source: https://wideo.co/api-documentation/, openapi/wideo-automation-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://wideo.co/api-documentation/, https://wideo.co/api/
 summary: >-
-  Cross-cutting request/response semantics for the Wideo Video Automation API,
-  derived from the published documentation and OpenAPI. Rendering is an
-  asynchronous batch model: submit a batch, receive an id immediately, and learn
-  of completion via a webhook callback or by polling batch status.
+  Cross-cutting request/response semantics for the Wideo Video Automation API, read
+  from the two published developer pages and reconciled against the captured
+  OpenAPI. Rendering is an asynchronous batch model: submit a batch, receive a
+  batchId immediately, and learn of completion via a caller-supplied webhook or by
+  polling batch status for signed asset URLs. Two generations of the surface are
+  live at once — the legacy /automation/replace + /automation/encode pair and the
+  newer /batch pair.
 authentication:
   style: api-key
   scheme: header
@@ -13,38 +16,83 @@ authentication:
   format: UUID
   scope: per-account, permission-scoped; generated assets isolated by account
   docs: https://wideo.co/api-documentation/
+  note: >-
+    The API-documentation page states the header form verbatim. The legacy
+    /automation/* code samples on wideo.co/api/ send only Content-Type and no
+    x-api-key, so the auth requirement on the legacy pair is not published
+    consistently.
+  onboarding: >-
+    Keys are not self-serve. Every tier, including the paid ones, is entered via
+    the "Request API access" form on https://wideo.co/api-documentation/.
 async_model:
   pattern: batch-render-then-callback
   submit: POST /batch returns a batchId immediately
   completion_webhook: >-
-    Caller supplies a `webhook` URL on the batch; Wideo POSTs an async
-    completion notification to it when rendering finishes.
+    Caller supplies a `webhook` URL on the batch; Wideo POSTs an async completion
+    notification to it when rendering finishes.
   poll: GET /batch/{batchId} returns status and, when SUCCEEDED, signed asset URLs
   statuses_documented:
   - SUCCEEDED
+  note: >-
+    Only the success terminal status is published. No failure, partial-failure, or
+    in-progress status is documented, so a poller has no published exit condition
+    other than success.
 idempotency:
   supported: false
+  header: null
   notes: >-
-    No idempotency-key header or parameter is documented for batch creation.
+    No idempotency-key header or parameter is documented for batch creation, and
+    none appears in the published request examples. Resubmitting the same batch
+    payload will render and bill it again.
 pagination:
   supported: false
-  notes: Batch status returns the full videos array; no paged collection endpoints documented.
+  notes: Batch status returns the full videos array; no paged collection endpoints are documented.
+request_tracing:
+  provider_header: null
+  observed: >-
+    The AWS API Gateway edge returns x-amzn-requestid and x-amz-apigw-id on every
+    response, which is the only correlation id available to a caller. Wideo does
+    not document either, so it cannot be relied on as a supported contract.
 media_type: application/json
 asset_delivery:
   style: signed-url
   fields:
   - videoUrl
   - previewUrl
-  notes: Rendered MP4 and preview image are returned as signed URLs on the batch status.
+  legacy_field: url
+  notes: >-
+    Rendered MP4 and preview image are returned as signed URLs on batch status. The
+    legacy encode call returns a plain video URL instead. Signed URLs are
+    time-limited; re-fetch via getBatch rather than caching indefinitely.
 versioning:
   scheme: unversioned-host
-  notes: Endpoints served from automationapi.wideo.co with no version path segment documented.
-error_signaling:
   notes: >-
-    Documentation surfaces a SUCCEEDED status but does not publish a structured
-    error catalog or error envelope. Authentication failures and missing
-    batches are represented with standard HTTP status codes.
+    Endpoints are served from https://automationapi.wideo.co with no version path
+    segment, header, or date. Generations are distinguished only by path prefix.
+error_signaling:
+  envelope: '{"message": string}'
+  problem_json: false
+  notes: >-
+    Errors come from AWS API Gateway as a single `message` string with the failure
+    class in the x-amzn-errortype header. No error reference or code registry is
+    published. See errors/wideo-problem-types.yml.
+rate_limit_signaling:
+  headers: []
+  notes: >-
+    No rate-limit headers are documented or observed. Consumption is governed by a
+    monthly credit quota, not a runtime rate limit. See rate-limits/wideo-rate-limits.yml.
+quota_model:
+  unit: credit
+  definition: 1 credit = 60 seconds of generated video
+  window: month
+  source: https://wideo.co/api-documentation/
 cross_links:
   authentication: authentication/wideo-authentication.yml
   webhooks: asyncapi/wideo-events-asyncapi.yml
-  openapi: openapi/wideo-automation-openapi.yml
+  errors: errors/wideo-problem-types.yml
+  lifecycle: lifecycle/wideo-lifecycle.yml
+  rate_limits: rate-limits/wideo-rate-limits.yml
+  plans: plans/wideo-plans-pricing.yml
+  openapi:
+  - openapi/wideo-batch-api-openapi.yml
+  - openapi/wideo-automation-api-openapi.yml

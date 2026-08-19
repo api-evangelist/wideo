@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: searched
+source: https://wideo.co/api-documentation/, https://wideo.co/api/, https://status.wideo.co/
+summary: >-
+  Wideo runs a public status page but publishes no versioning policy, no
+  deprecation policy and no SLA for the Video Automation API. Two generations of
+  the API are live at once — the legacy /automation/replace + /automation/encode
+  pair still documented on wideo.co/api/, and the newer /batch pair presented as a
+  "Developer preview" on wideo.co/api-documentation/ — with nothing published that
+  says whether the legacy pair is supported, frozen, or scheduled for removal.
+versioning:
+  scheme: unversioned-host
+  current: null
+  docs: null
+  note: >-
+    Endpoints are served from https://automationapi.wideo.co with no version path
+    segment, no version header, and no date-based version. The two generations are
+    distinguished only by path prefix (/automation/* vs /batch).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support, and no
+    published statement about the future of the legacy /automation/* flow. It is
+    described on wideo.co/api/ as the current integration path while
+    wideo.co/api-documentation/ presents /batch as the supported surface, so the
+    status of the legacy pair is genuinely ambiguous from the public record.
+deprecated_operations: []
+maturity:
+  batch_api: developer preview
+  automation_api: legacy
+  source: >-
+    "Developer preview" is Wideo's own label for the /batch endpoints on
+    https://wideo.co/api-documentation/.
+sla:
+  url: null
+  uptime_target: null
+  note: No SLA or uptime commitment is published for the API.
+status_page:
+  url: https://status.wideo.co/
+  http_status: 200
+  title: 'Wideo.co Status: OK'
+  platform: Tumblr-hosted status blog
+  feed: https://status.wideo.co/rss
+  note: >-
+    A real, publicly reachable status page with an RSS feed. It is a hand-written
+    status blog rather than a component-level status service, so it carries no
+    per-component uptime history or incident API.
+changelog:
+  url: null
+  note: >-
+    No changelog or release-notes page was found. /release-notes/, /whats-new/ and
+    /changelog/ all return 404 on wideo.co.
+access:
+  onboarding: request-access
+  note: >-
+    Every API tier, including the paid ones, is entered through a "Request API
+    access" form. There is no self-serve key issuance, so an integrator cannot
+    obtain a credential without a sales conversation.
+x-evidence:
+- url: https://status.wideo.co/
+  status: 200
+- url: https://wideo.co/changelog/
+  status: 404
+- url: https://wideo.co/release-notes/
+  status: 404
+- url: https://wideo.co/api-documentation/
+  status: 200

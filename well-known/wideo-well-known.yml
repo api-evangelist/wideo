@@ -1,6 +1,7 @@
-generated: '2026-07-21'
-method: searched
-source: live probe of /.well-known/ on wideo.co and automationapi.wideo.co
+generated: '2026-08-13'
+method: probed
+source: live probe of /.well-known/ on wideo.co, www.wideo.co, automationapi.wideo.co, app.wideo.co and help.wideo.co
+result: no-documents
 hosts:
 - host: https://wideo.co
   documents:
@@ -14,7 +15,17 @@ hosts:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
   - path: /llms.txt
+    status: 404
+- host: https://www.wideo.co
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
     status: 404
 - host: https://automationapi.wideo.co
   documents:
@@ -22,10 +33,30 @@ hosts:
     status: 403
   - path: /.well-known/openid-configuration
     status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
   - path: /llms.txt
     status: 403
+- host: https://app.wideo.co
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://help.wideo.co
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
 notes: >-
-  No .well-known discovery documents are published. The wideo.co web host
-  returns 404 for all probed paths; the automationapi.wideo.co API host returns
-  403 (access-gated) for all paths including its root, consistent with an
-  API-key-protected surface. Recorded absence is valid data.
+  No .well-known discovery document is published on any Wideo host. The wideo.co
+  WordPress site returns 404 for every probed path; automationapi.wideo.co is an
+  AWS API Gateway that returns 403 {"message":"Missing Authentication Token"} for
+  every path including its root, so nothing is anonymously discoverable there
+  either. Re-probed 2026-08-13 with the agent-card paths added. Because every path
+  missed, NO WellKnown, SecurityTxt or AgentCard pointer is emitted in apis.yml —
+  this file records a verified absence, not a served surface. A WellKnown pointer
+  was present before this round and has been removed for that reason.

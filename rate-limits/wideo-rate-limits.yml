@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: searched
+source: https://wideo.co/api-documentation/
+docs:
+- https://wideo.co/api-documentation/
+- https://wideo.co/pricing-guide/
+limit_count: 0
+summary: >-
+  Wideo publishes no request-rate limit for the Video Automation API. Neither the
+  API documentation page nor the pricing page states a requests-per-second or
+  requests-per-minute ceiling, a burst allowance, a 429 behaviour, or any
+  rate-limit response header. What Wideo does publish is a monthly consumption
+  quota expressed in rendering credits, which is a billing quota rather than a
+  runtime rate limit — an integrator cannot tell from the published surface how
+  fast they may submit batches.
+limits: []
+quotas:
+- scope: per-account
+  window: month
+  unit: credit
+  definition: 1 credit = 60 seconds of generated video
+  values:
+  - plan: Basic
+    limit: 500
+  - plan: Pro
+    limit: 1000
+  - plan: Pro+
+    limit: 2000
+  - plan: Enterprise
+    limit: custom
+  source: https://wideo.co/api-documentation/
+- scope: per-account
+  window: month
+  unit: video
+  limit: 50
+  applies_to: Zapier automation on the product Pro+ subscription (not the Automation API)
+  source: https://wideo.co/pricing-guide/
+response_headers:
+  documented: []
+  observed: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is documented. An
+    unauthenticated probe of https://automationapi.wideo.co/batch on 2026-08-13
+    returned HTTP 403 with only AWS API Gateway headers (x-amzn-errortype,
+    x-amz-apigw-id) and no rate-limit header, so nothing could be observed
+    anonymously either.
+exhaustion:
+  status_code: null
+  note: The status code returned when a credit allowance is exhausted is not published.
+x-evidence:
+- url: https://wideo.co/api-documentation/
+  status: 200
+  finding: credit quotas per plan, no rate limit stated
+- url: https://automationapi.wideo.co/batch
+  status: 403
+  finding: no rate-limit headers on the anonymous response

@@ -1,0 +1,387 @@
+{
+  "item": [
+    {
+      "id": "c04c0216-2f01-4c3c-a96b-cd9087085442",
+      "name": "Batch",
+      "description": {
+        "content": "Batch video rendering from a template and a set of variable objects",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f7162c6-e483-4f2c-96fe-fb638ecf171b",
+          "name": "Create a rendering batch",
+          "request": {
+            "name": "Create a rendering batch",
+            "description": {
+              "content": "Create a rendering batch from a template and per-video metadata. Returns a batchId immediately; rendering runs asynchronously. When rendering finishes, Wideo delivers a webhook callback to the supplied webhook URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"templateId\": \"<string>\",\n  \"videos\": [\n    {\n      \"key_0\": false,\n      \"key_1\": 9937.41216936127\n    },\n    {\n      \"key_0\": 5556.367498532612,\n      \"key_1\": \"string\"\n    }\n  ],\n  \"webhook\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b62f1c54-c6e0-4229-a80d-9a29fa72c710",
+              "name": "Batch accepted for rendering",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateId\": \"template_123\",\n  \"webhook\": \"https://your-domain.com/webhook\",\n  \"videos\": [\n    {\n      \"title\": \"Product Launch Video\",\n      \"companyname\": \"Acme Inc.\",\n      \"logo\": \"https://example.com/logo.png\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batchId\": 1234567890\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "840c46a6-221f-4691-b5ec-964dbc7ef8d5",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"templateId\": \"template_123\",\n  \"webhook\": \"https://your-domain.com/webhook\",\n  \"videos\": [\n    {\n      \"title\": \"Product Launch Video\",\n      \"companyname\": \"Acme Inc.\",\n      \"logo\": \"https://example.com/logo.png\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab4a5ca1-7599-4350-9183-aff67e8550ce",
+          "name": "Check batch status",
+          "request": {
+            "name": "Check batch status",
+            "description": {
+              "content": "Retrieve the status of a rendering batch and, once SUCCEEDED, the signed video and preview URLs for each generated video.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batch",
+                ":batchId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "batchId",
+                  "description": "(Required) Identifier returned by createBatch"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa43809a-7f3d-4930-8288-600c9b42df67",
+              "name": "Batch status and generated assets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    ":batchId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "batchId",
+                      "description": "(Required) Identifier returned by createBatch"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batchId\": 1234567890,\n  \"status\": \"SUCCEEDED\",\n  \"videos\": [\n    {\n      \"videoUrl\": \"https://signed-url.example.com/video.mp4\",\n      \"previewUrl\": \"https://signed-url.example.com/preview.png\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eee6bbb8-e6ba-4115-96be-4314b98e28d5",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    ":batchId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "batchId",
+                      "description": "(Required) Identifier returned by createBatch"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "57ab377e-75c5-4a9f-b554-47836d82ea8d",
+              "name": "Batch not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batch",
+                    ":batchId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "batchId",
+                      "description": "(Required) Identifier returned by createBatch"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://automationapi.wideo.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1ae3a9fc-068f-49f0-83c2-eca497206d4a",
+    "name": "Wideo Video Automation Batch API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Wideo's Video Automation API generates finished MP4 videos at scale from reusable templates and structured data. A rendering batch is created from a template plus a list of per-video variable objects; rendering is asynchronous and completion is signalled by a webhook callback and/or by polling batch status for signed video and preview URLs. A legacy replace/encode flow lets a template's variables be replaced and then encoded into a single video.\n\nContact Support:\n Name: Wideo API Support",
+      "type": "text/plain"
+    }
+  }
+}

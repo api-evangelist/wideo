@@ -1,6 +1,6 @@
 generated: '2026-07-21'
 method: generated
-source: openapi/wideo-automation-openapi.yml
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.

@@ -1,6 +1,6 @@
 generated: '2026-07-21'
 method: derived
-source: https://wideo.co/api-documentation/, openapi/wideo-automation-openapi.yml
+source: https://wideo.co/api-documentation/, openapi/wideo-batch-api-openapi.yml
 spec_type: Webhooks
 summary: >-
   Wideo delivers an asynchronous completion callback for each rendering batch.
@@ -20,8 +20,8 @@ webhooks:
     the signed asset URLs (or read them from the payload if included).
   trigger: rendering of a batch created via POST /batch completes
   related_operations:
-  - openapi/wideo-automation-openapi.yml#createBatch
-  - openapi/wideo-automation-openapi.yml#getBatch
+  - openapi/wideo-batch-api-openapi.yml#createBatch
+  - openapi/wideo-batch-api-openapi.yml#getBatch
   payload_fields:
   - batchId
   - status

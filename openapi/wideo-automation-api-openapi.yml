@@ -23,13 +23,18 @@ paths:
       - Automation
       operationId: replaceVariables
       summary: Replace template variables
-      description: Legacy flow. Replace a template's variable content with supplied values, producing a replace object that can then be encoded into a video.
+      description: Legacy flow. Replace a template's variable content with supplied values, producing a replace object whose id (REPLACE_OBJECT_ID) is then passed to the encode call.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ReplaceRequest'
+            example:
+              data:
+                name: '1'
+                desc: description
+                image: https://yourdomain.co/1.png
       responses:
         '200':
           description: Replace object created
@@ -37,19 +42,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReplaceResponse'
+              example:
+                statusCode: '200'
+                body:
+                  id: REPLACE_OBJECT_ID
+        '403':
+          description: >-
+            Missing or invalid API key. The AWS API Gateway edge answers
+            `{"message":"Missing Authentication Token"}` with the header
+            `x-amzn-errortype` set to `MissingAuthenticationTokenException`.
   /automation/encode:
     post:
       tags:
       - Automation
       operationId: encodeVideo
       summary: Encode a video
-      description: Legacy flow. Encode a single MP4 video from a template and a previously created replace object, returning the finished video URL.
+      description: Legacy flow. Encode one or more MP4 videos from a template and a previously created replace object, returning the finished video URL.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/EncodeRequest'
+            example:
+              clientId: YourName
+              videos:
+              - templateId: TEMPLATE_ID
+                replaceId: REPLACE_OBJECT_ID
       responses:
         '200':
           description: Video encoded
@@ -57,19 +76,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EncodeResponse'
+              example:
+                replaceId: REPLACE_OBJECT_ID
+                templateId: TEMPLATE_ID
+                url: https://server.com/your_automation_video.mp4
+        '403':
+          description: >-
+            Missing or invalid API key. The AWS API Gateway edge answers
+            `{"message":"Missing Authentication Token"}` with the header
+            `x-amzn-errortype` set to `MissingAuthenticationTokenException`.
 components:
   schemas:
     ReplaceRequest:
       type: object
       required:
-      - templateId
+      - data
+      description: Wraps the variable values to substitute into the template, keyed by the variable names defined in that template.
       properties:
-        templateId:
-          type: string
-        variables:
+        data:
           type: object
+          description: Free-form map of template variable names to values.
           additionalProperties: true
     EncodeRequest:
+      type: object
+      required:
+      - videos
+      properties:
+        clientId:
+          type: string
+          description: Caller-supplied label used for tracking purposes only.
+        videos:
+          type: array
+          description: One entry per video to encode.
+          items:
+            $ref: '#/components/schemas/EncodeVideo'
+    EncodeVideo:
       type: object
       required:
       - templateId
@@ -77,20 +118,48 @@ components:
       properties:
         templateId:
           type: string
+          description: Identifier of the Wideo template selected in step one.
         replaceId:
           type: string
+          description: REPLACE_OBJECT_ID returned by replaceVariables.
     EncodeResponse:
       type: object
+      description: >-
+        Documented response body for the encode call. Note the published documentation is
+        internally inconsistent here — the response body example returns `replaceId`,
+        `templateId` and `url` at the top level, while the accompanying JavaScript sample
+        reads the URL from `response.videos[0].url`. Both shapes are recorded rather than
+        one being chosen for the provider.
       properties:
-        videoUrl:
+        replaceId:
+          type: string
+        templateId:
+          type: string
+        url:
           type: string
           format: uri
+          description: Finished MP4 URL.
+        videos:
+          type: array
+          description: Alternate shape used by the published JavaScript sample.
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
     ReplaceResponse:
       type: object
       properties:
-        replaceId:
+        statusCode:
           type: string
-          description: REPLACE_OBJECT_ID referenced by the encode call
+          description: Echoed status code, returned as a string in the published example.
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+              description: REPLACE_OBJECT_ID referenced by the encode call
   securitySchemes:
     apiKeyAuth:
       type: apiKey

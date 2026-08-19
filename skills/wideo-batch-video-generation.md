@@ -1,7 +1,7 @@
 ---
 name: Generate videos in bulk with Wideo
 description: Render a batch of personalized MP4 videos from a Wideo template and a list of per-video variable objects, then retrieve the finished signed URLs.
-api: openapi/wideo-automation-openapi.yml
+api: openapi/wideo-batch-api-openapi.yml
 operations:
 - createBatch
 - getBatch

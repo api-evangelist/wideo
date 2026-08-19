@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Wideo Video Automation Batch API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a rendering batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://automationapi.wideo.co/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a rendering batch from a template and per-video metadata. Returns a batchId immediately; rendering runs asynchronously. When rendering finishes, Wideo delivers a webhook callback to the supplied webhook URL."
+        },
+        {
+          "info": {
+            "name": "Check batch status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://automationapi.wideo.co/batch/:batchId",
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier returned by createBatch"
+              }
+            ]
+          },
+          "docs": "Retrieve the status of a rendering batch and, once SUCCEEDED, the signed video and preview URLs for each generated video."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

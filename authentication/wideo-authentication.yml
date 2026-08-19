@@ -1,6 +1,7 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/wideo-automation-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://wideo.co/api-documentation/
+docs: https://wideo.co/api-documentation/
 summary:
   types:
   - apiKey
@@ -11,7 +12,36 @@ schemes:
   type: apiKey
   in: header
   parameter: x-api-key
-  description: API key in UUID form, scoped to a specific account and permission set. Generated
-    assets are isolated by account.
+  format: UUID
+  description: >-
+    API key in UUID form, scoped to a specific account and permission set.
+    Generated assets are isolated by account and stored securely.
+  example_shape: '12345678-1234-1234-1234-123456789012'
+  docs: https://wideo.co/api-documentation/
   sources:
-  - openapi/wideo-automation-openapi.yml
+  - https://wideo.co/api-documentation/
+  - openapi/wideo-automation-api-openapi.yml
+  - openapi/wideo-batch-api-openapi.yml
+issuance:
+  self_serve: false
+  path: '"Request API access" form on https://wideo.co/api-documentation/'
+  note: >-
+    No key can be obtained without a sales conversation. Every tier, including the
+    published paid tiers, is entered through the request form; there is no
+    dashboard-issued key documented.
+rotation:
+  documented: false
+  note: No key rotation, expiry, or revocation procedure is published.
+observed:
+  unauthenticated_response:
+    status: 403
+    body: '{"message":"Missing Authentication Token"}'
+    header: 'x-amzn-errortype: MissingAuthenticationTokenException'
+    url: https://automationapi.wideo.co/batch
+    probed: '2026-08-13'
+gaps:
+- >-
+  The legacy /automation/* code samples published on https://wideo.co/api/ send
+  only a Content-Type header and no x-api-key, so the published documentation does
+  not consistently state that the legacy pair requires a key.
+- No OAuth, OIDC or scoped-permission surface exists; see conformance/wideo-conformance.yml.

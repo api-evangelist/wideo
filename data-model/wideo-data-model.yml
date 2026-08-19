@@ -1,6 +1,6 @@
 generated: '2026-07-21'
 method: derived
-source: openapi/wideo-automation-openapi.yml
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml
 summary: >-
   Entity-relationship graph derived from the Wideo Video Automation API OpenAPI
   schemas. A Template is rendered against a set of per-video variable objects to

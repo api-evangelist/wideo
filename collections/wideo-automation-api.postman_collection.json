@@ -1,0 +1,347 @@
+{
+  "item": [
+    {
+      "id": "892d2ee4-3d26-4ff7-8f1f-2dd4a463c71e",
+      "name": "Automation",
+      "description": {
+        "content": "Legacy variable replace and single-video encode flow",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fdb801e-3886-48d2-b0a8-1235ecc332e6",
+          "name": "Replace template variables",
+          "request": {
+            "name": "Replace template variables",
+            "description": {
+              "content": "Legacy flow. Replace a template's variable content with supplied values, producing a replace object whose id (REPLACE_OBJECT_ID) is then passed to the encode call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automation",
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ae5eb98f-6d9e-4453-bf20-3c315733d8a4",
+              "name": "Replace object created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automation",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"name\": \"1\",\n    \"desc\": \"description\",\n    \"image\": \"https://yourdomain.co/1.png\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": \"200\",\n  \"body\": {\n    \"id\": \"REPLACE_OBJECT_ID\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ba5c105-b9d1-48b8-872a-45f7b3e76fa5",
+              "name": "Missing or invalid API key. The AWS API Gateway edge answers `{\"message\":\"Missing Authentication Token\"}` with the header `x-amzn-errortype` set to `MissingAuthenticationTokenException`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automation",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"name\": \"1\",\n    \"desc\": \"description\",\n    \"image\": \"https://yourdomain.co/1.png\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5813506-ccb9-441b-925b-4d62cb5b0166",
+          "name": "Encode a video",
+          "request": {
+            "name": "Encode a video",
+            "description": {
+              "content": "Legacy flow. Encode one or more MP4 videos from a template and a previously created replace object, returning the finished video URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automation",
+                "encode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"videos\": [\n    {\n      \"templateId\": \"<string>\",\n      \"replaceId\": \"<string>\"\n    },\n    {\n      \"templateId\": \"<string>\",\n      \"replaceId\": \"<string>\"\n    }\n  ],\n  \"clientId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0a3e125-9dca-4bf4-b986-efa71d2464d1",
+              "name": "Video encoded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automation",
+                    "encode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"YourName\",\n  \"videos\": [\n    {\n      \"templateId\": \"TEMPLATE_ID\",\n      \"replaceId\": \"REPLACE_OBJECT_ID\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"replaceId\": \"REPLACE_OBJECT_ID\",\n  \"templateId\": \"TEMPLATE_ID\",\n  \"url\": \"https://server.com/your_automation_video.mp4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ee09f65-847e-4e71-b54a-5e347e203360",
+              "name": "Missing or invalid API key. The AWS API Gateway edge answers `{\"message\":\"Missing Authentication Token\"}` with the header `x-amzn-errortype` set to `MissingAuthenticationTokenException`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automation",
+                    "encode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"YourName\",\n  \"videos\": [\n    {\n      \"templateId\": \"TEMPLATE_ID\",\n      \"replaceId\": \"REPLACE_OBJECT_ID\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://automationapi.wideo.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "52d9884f-660b-4057-b1e1-e2e02f9e2d0f",
+    "name": "Wideo Video Automation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Wideo's Video Automation API generates finished MP4 videos at scale from reusable templates and structured data. A rendering batch is created from a template plus a list of per-video variable objects; rendering is asynchronous and completion is signalled by a webhook callback and/or by polling batch status for signed video and preview URLs. A legacy replace/encode flow lets a template's variables be replaced and then encoded into a single video.\n\nContact Support:\n Name: Wideo API Support",
+      "type": "text/plain"
+    }
+  }
+}

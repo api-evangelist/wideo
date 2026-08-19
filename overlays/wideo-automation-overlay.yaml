@@ -1,18 +1,24 @@
 overlay: 1.0.0
 info:
-  title: API Evangelist enhancements for Wideo Video Automation API
-  version: 1.0.0
-extends: openapi/wideo-automation-openapi.yml
+  title: API Evangelist enhancements for the Wideo legacy Automation API
+  version: 1.1.0
+extends: openapi/wideo-automation-api-openapi.yml
 actions:
 - target: $.info
   update:
-    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-enriched: '2026-08-13'
     x-apievangelist-category: video-automation
-    x-apievangelist-async-model: batch-render-then-webhook
-- target: $.paths['/batch'].post
+    x-apievangelist-generation: legacy
+    x-apievangelist-source: https://wideo.co/api/
+- target: $.paths['/automation/replace'].post
   update:
-    x-async: true
-    x-completion: webhook + poll GET /batch/{batchId}
-- target: $.paths['/batch/{batchId}'].get
+    x-step: 1
+    x-produces-handle: REPLACE_OBJECT_ID
+- target: $.paths['/automation/encode'].post
   update:
-    x-poll-for: SUCCEEDED
+    x-step: 2
+    x-consumes-handle: REPLACE_OBJECT_ID
+    x-idempotent: false
+    x-note: >-
+      Re-running this call with the same replaceId renders and bills a second
+      video; no idempotency key is documented.

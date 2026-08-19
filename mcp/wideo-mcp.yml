@@ -1,25 +1,42 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: derived
 status: candidate
-source: openapi/wideo-automation-openapi.yml
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml
+description: >-
+  No official Wideo MCP server exists. Searched the Wideo documentation, the npm
+  registry (including the first-party @wideo scope) and the public MCP server
+  listings on 2026-08-13 and found nothing published by Wideo. This is a candidate
+  tool surface derived from the documented Video Automation API operations, one
+  tool per operationId. It is not a provider claim and there is no endpoint an
+  agent can call.
 server:
   name: wideo
   transport: http
   url: null
-description: >-
-  No official Wideo MCP server was found. This is a candidate tool surface
-  derived from the documented Video Automation API operations, one tool per
-  operationId. Not an authoritative provider claim.
 tools:
 - name: create_batch
   description: Create a rendering batch from a template and a list of per-video variable objects.
-  source_operation: openapi/wideo-automation-openapi.yml#createBatch
+  source_operation: openapi/wideo-batch-api-openapi.yml#createBatch
 - name: get_batch
   description: Check batch status and retrieve signed video and preview URLs when SUCCEEDED.
-  source_operation: openapi/wideo-automation-openapi.yml#getBatch
+  source_operation: openapi/wideo-batch-api-openapi.yml#getBatch
 - name: replace_variables
   description: Legacy flow — replace a template's variables to produce a replace object.
-  source_operation: openapi/wideo-automation-openapi.yml#replaceVariables
+  source_operation: openapi/wideo-automation-api-openapi.yml#replaceVariables
 - name: encode_video
-  description: Legacy flow — encode a single MP4 video from a template and a replace object.
-  source_operation: openapi/wideo-automation-openapi.yml#encodeVideo
+  description: Legacy flow — encode an MP4 video from a template and a replace object.
+  source_operation: openapi/wideo-automation-api-openapi.yml#encodeVideo
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+  tools: 4
+  checked: '2026-08-13'
+  note: >-
+    mode is none because Wideo ships neither a remote MCP endpoint nor a stdio
+    package. auth records what the underlying API requires (an x-api-key header),
+    not an MCP authorization scheme, since no server exists to authorize against.
+crosswalk: mcp/wideo-tool-crosswalk.yml

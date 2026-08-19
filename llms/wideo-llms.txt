@@ -1,28 +1,45 @@
 # Wideo
 
-> Wideo is an online video creation and automation platform. Its Video Automation API renders finished MP4 videos at scale from reusable templates and structured per-video data, with asynchronous batch rendering, webhook completion callbacks, and signed video/preview URLs.
+> Wideo is an online video creation and automation platform. Its Video Automation API renders finished MP4 videos at scale from reusable templates and structured per-video data, with asynchronous batch rendering, webhook completion callbacks, and signed video/preview URLs. API access is not self-serve — every tier is entered through a "Request API access" form — and Wideo publishes no OpenAPI, no SDK, and no MCP server.
 
 ## APIs
 
-- [Wideo Video Automation API — Documentation](https://wideo.co/api-documentation/): Create rendering batches from a template and per-video variables; poll batch status for signed asset URLs. Auth: x-api-key header.
-- [Video API product overview](https://wideo.co/api/): Automated video creation at scale from any data source.
+- [Wideo Video Automation Batch API](https://wideo.co/api-documentation/): POST /batch creates a rendering batch from a template and per-video variables and returns a batchId; GET /batch/{batchId} returns status and signed asset URLs. Base https://automationapi.wideo.co. Auth: x-api-key header (UUID).
+- [Wideo legacy Automation API](https://wideo.co/api/): POST /automation/replace substitutes template variables and returns a REPLACE_OBJECT_ID; POST /automation/encode renders it into an MP4. Same base host.
 
 ## Specs
 
-- [OpenAPI (Video Automation API)](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/openapi/wideo-automation-openapi.yml)
+- [OpenAPI — Batch API](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/openapi/wideo-batch-api-openapi.yml)
+- [OpenAPI — legacy Automation API](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/openapi/wideo-automation-api-openapi.yml)
 - [Webhook catalog](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/asyncapi/wideo-events-asyncapi.yml)
 - [Authentication profile](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/authentication/wideo-authentication.yml)
 - [API conventions](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/conventions/wideo-conventions.yml)
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/errors/wideo-problem-types.yml)
+- [Lifecycle and status](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/lifecycle/wideo-lifecycle.yml)
+- [Plans and pricing](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/plans/wideo-plans-pricing.yml)
+- [Rate limits and quotas](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/rate-limits/wideo-rate-limits.yml)
 - [Data model](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/data-model/wideo-data-model.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/conformance/wideo-conformance.yml)
+- [Packages](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/packages/wideo-packages.yml)
+- [Candidate MCP tools](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/mcp/wideo-mcp.yml) and the [tool crosswalk](https://raw.githubusercontent.com/api-evangelist/wideo/refs/heads/main/mcp/wideo-tool-crosswalk.yml)
 
 ## Docs
 
-- [Developers](https://wideo.co/developers/)
-- [API documentation](https://wideo.co/api-documentation/)
+- [API documentation (developer preview)](https://wideo.co/api-documentation/)
+- [Video Automation API overview and quickstart](https://wideo.co/api/)
 - [Help center](https://help.wideo.co/hc/en-us)
-- [Pricing](https://wideo.co/pricing-guide/)
-- [White-label video API](https://wideo.co/white-label-video/)
+- [Status](https://status.wideo.co/)
+- [Product pricing](https://wideo.co/pricing-guide/)
+- [White-label video platform](https://wideo.co/white-label-video/)
 - [Blog](https://wideo.co/blog/)
 - [Sign up](https://app.wideo.co/en/createAccount/)
 - [Terms and conditions](https://wideo.co/terms-and-conditions-wideo/)
 - [Privacy policy](https://wideo.co/wideo-privacy-policy/)
+
+## Notes for agents
+
+- There is no MCP server and no A2A agent card. Every /.well-known/ path returns 404 on wideo.co and 403 on automationapi.wideo.co.
+- Rendering is asynchronous. create_batch returns a batchId, not a video. SUCCEEDED is the only terminal status Wideo publishes, so there is no documented failure exit from a poll loop.
+- No idempotency key exists. Resubmitting a batch renders and bills it again.
+- Consumption is billed in credits: 1 credit = 60 seconds of generated video, on a monthly allowance (Basic 500 / Pro 1,000 / Pro+ 2,000 / Enterprise custom).
+- Errors are a bare {"message": "..."} envelope from AWS API Gateway; the failure class is in the x-amzn-errortype header.

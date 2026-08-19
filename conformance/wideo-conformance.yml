@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml, https://wideo.co/api-documentation/
+summary: >-
+  Cross-cutting standards posture for the Wideo Video Automation API, derived from
+  the captured OpenAPI and the published documentation. Wideo publishes no
+  compliance program, no certifications and no standards claims of any kind, so no
+  Compliance pointer is emitted. The API is a plain JSON-over-HTTPS surface with a
+  single header API key.
+standards:
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI is published by Wideo. Probes of /openapi.json, /openapi.yaml,
+    /swagger.json, /v1/openapi.json, /api-docs, /docs and /redoc on
+    automationapi.wideo.co all returned 403 (AWS API Gateway
+    MissingAuthenticationToken), and the same paths on wideo.co returned 404. The
+    specs in openapi/ are API Evangelist derivations from the published docs.
+- id: api-key-auth
+  conforms: true
+  evidence: "openapi securitySchemes type apiKey, in: header, name: x-api-key"
+- id: oauth2
+  conforms: false
+  evidence: No OAuth surface. /.well-known/oauth-authorization-server returns 404 on wideo.co and 403 on automationapi.wideo.co.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on wideo.co and 403 on automationapi.wideo.co.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a bare single-field `message` JSON envelope from AWS API Gateway;
+    no application/problem+json is used.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on wideo.co.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation policy or Sunset/Deprecation header support is published.
+- id: rfc8615-well-known
+  conforms: false
+  evidence: Every probed /.well-known/ path 404s (wideo.co) or 403s (automationapi.wideo.co).
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A real webhook surface exists (caller-supplied webhook URL on batch creation)
+    but no AsyncAPI document is published; see asyncapi/wideo-events-asyncapi.yml
+    for the derived webhook catalog.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key header or parameter is documented for batch creation.
+- id: pagination
+  conforms: false
+  evidence: No paged collection endpoints exist; batch status returns the full videos array.
+- id: json
+  conforms: true
+  evidence: All documented requests and responses are application/json.
+- id: tls
+  conforms: true
+  evidence: TLSv1.3 on both wideo.co and automationapi.wideo.co; see security/wideo-domain-security.yml.
+compliance_program:
+  published: false
+  certifications: []
+  note: >-
+    No trust center, no SOC 2 / ISO 27001 / PCI / HIPAA / GDPR certification page,
+    and no security page. https://wideo.co/security/ returns 404 and
+    https://trust.wideo.co/ does not resolve. The only security statement Wideo
+    makes about the API is that "generated assets are isolated by account and
+    stored securely".
