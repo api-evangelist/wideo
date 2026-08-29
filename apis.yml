@@ -11,6 +11,18 @@ description: >-
   legacy replace/encode flow supports single-video generation. Wideo also offers
   a white-label video API for embedding video creation into other products.
   Wideo was surfaced as a portfolio company of 500 Global.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
