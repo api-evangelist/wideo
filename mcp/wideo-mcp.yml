@@ -2,13 +2,10 @@ generated: '2026-08-13'
 method: derived
 status: candidate
 source: openapi/wideo-batch-api-openapi.yml, openapi/wideo-automation-api-openapi.yml
-description: >-
-  No official Wideo MCP server exists. Searched the Wideo documentation, the npm
-  registry (including the first-party @wideo scope) and the public MCP server
-  listings on 2026-08-13 and found nothing published by Wideo. This is a candidate
-  tool surface derived from the documented Video Automation API operations, one
-  tool per operationId. It is not a provider claim and there is no endpoint an
-  agent can call.
+description: No official Wideo MCP server exists. Searched the Wideo documentation, the npm registry (including
+  the first-party @wideo scope) and the public MCP server listings on 2026-08-13 and found nothing published
+  by Wideo. This is a candidate tool surface derived from the documented Video Automation API operations,
+  one tool per operationId. It is not a provider claim and there is no endpoint an agent can call.
 server:
   name: wideo
   transport: http
@@ -28,15 +25,8 @@ tools:
   source_operation: openapi/wideo-automation-api-openapi.yml#encodeVideo
 deployment:
   mode: none
-  endpoint: null
-  install: null
-  package: null
-  auth: api-key
-  verified: searched
+  verified: derived
   tools: 4
-  checked: '2026-08-13'
-  note: >-
-    mode is none because Wideo ships neither a remote MCP endpoint nor a stdio
-    package. auth records what the underlying API requires (an x-api-key header),
-    not an MCP authorization scheme, since no server exists to authorize against.
+  checked: '2026-08-12'
+  source: catalog MCP census
 crosswalk: mcp/wideo-tool-crosswalk.yml

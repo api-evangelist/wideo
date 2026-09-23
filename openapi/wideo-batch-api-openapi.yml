@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Wideo Video Automation Batch API
   version: '1.0'
@@ -82,21 +82,6 @@ paths:
           description: Batch not found
 components:
   schemas:
-    VideoVariables:
-      type: object
-      description: Free-form map of template variable names to values. Keys correspond to the variable content areas defined in the template.
-      additionalProperties: true
-    RenderedVideo:
-      type: object
-      properties:
-        videoUrl:
-          type: string
-          format: uri
-          description: Signed URL of the rendered MP4
-        previewUrl:
-          type: string
-          format: uri
-          description: Signed URL of the preview image
     BatchStatus:
       type: object
       properties:
@@ -112,6 +97,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RenderedVideo'
+    VideoVariables:
+      type: object
+      description: Free-form map of template variable names to values. Keys correspond to the variable content areas defined in the template.
+      additionalProperties: true
+    RenderedVideo:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          format: uri
+          description: Signed URL of the rendered MP4
+        previewUrl:
+          type: string
+          format: uri
+          description: Signed URL of the preview image
     CreateBatchResponse:
       type: object
       properties:
