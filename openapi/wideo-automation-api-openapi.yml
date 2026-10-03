@@ -59,12 +59,6 @@ paths:
                 $ref: '#/components/schemas/EncodeResponse'
 components:
   schemas:
-    ReplaceResponse:
-      type: object
-      properties:
-        replaceId:
-          type: string
-          description: REPLACE_OBJECT_ID referenced by the encode call
     EncodeRequest:
       type: object
       required:
@@ -75,6 +69,18 @@ components:
           type: string
         replaceId:
           type: string
+    ReplaceResponse:
+      type: object
+      properties:
+        replaceId:
+          type: string
+          description: REPLACE_OBJECT_ID referenced by the encode call
+    EncodeResponse:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          format: uri
     ReplaceRequest:
       type: object
       required:
@@ -85,12 +91,6 @@ components:
         variables:
           type: object
           additionalProperties: true
-    EncodeResponse:
-      type: object
-      properties:
-        videoUrl:
-          type: string
-          format: uri
   securitySchemes:
     apiKeyAuth:
       type: apiKey
