@@ -82,21 +82,10 @@ paths:
           description: Batch not found
 components:
   schemas:
-    BatchStatus:
+    VideoVariables:
       type: object
-      properties:
-        batchId:
-          type: integer
-          format: int64
-        status:
-          type: string
-          description: Rendering status of the batch
-          enum:
-          - SUCCEEDED
-        videos:
-          type: array
-          items:
-            $ref: '#/components/schemas/RenderedVideo'
+      description: Free-form map of template variable names to values. Keys correspond to the variable content areas defined in the template.
+      additionalProperties: true
     RenderedVideo:
       type: object
       properties:
@@ -133,10 +122,21 @@ components:
           description: One variable object per video to render from the template
           items:
             $ref: '#/components/schemas/VideoVariables'
-    VideoVariables:
+    BatchStatus:
       type: object
-      description: Free-form map of template variable names to values. Keys correspond to the variable content areas defined in the template.
-      additionalProperties: true
+      properties:
+        batchId:
+          type: integer
+          format: int64
+        status:
+          type: string
+          description: Rendering status of the batch
+          enum:
+          - SUCCEEDED
+        videos:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderedVideo'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

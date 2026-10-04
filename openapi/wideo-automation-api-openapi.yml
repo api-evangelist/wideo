@@ -69,12 +69,6 @@ components:
           type: string
         replaceId:
           type: string
-    ReplaceResponse:
-      type: object
-      properties:
-        replaceId:
-          type: string
-          description: REPLACE_OBJECT_ID referenced by the encode call
     EncodeResponse:
       type: object
       properties:
@@ -91,6 +85,12 @@ components:
         variables:
           type: object
           additionalProperties: true
+    ReplaceResponse:
+      type: object
+      properties:
+        replaceId:
+          type: string
+          description: REPLACE_OBJECT_ID referenced by the encode call
   securitySchemes:
     apiKeyAuth:
       type: apiKey
